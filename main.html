@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>HW3_ABAY</title>
+        <link rel="stylesheet" href="./style.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"/>
+    </head>
+
+    <body>
+        <div class="container">
+            <div style="margin-left: 20px;" id="btn" onclick="volumeup()">
+                <i class="fa fa-volume-up fa-5x"></i>
+            </div>
+            <div style="margin-left: 20px;" id="btn" onclick="volumedown()">
+                <i class="fa fa-volume-down fa-5x"></i>
+            </div>
+            <div style="margin-left: 20px;" id="btn1" onclick="playVideo()">
+                <i class="fa fa-play-circle fa-5x"></i>
+            </div>
+            <div>
+                <input style="margin-left: 20px;"  type="range" id="progressBar" min="0" max="" value="0" />
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="volcont">
+        </div>
+
+        <div class="video">
+            <video id="back-video" autoplay width="100%">
+                <source src="./video/asc.mp4">
+            </source>
+            </video>
+        </div>
+    <script>
+        let video=document.getElementById("back-video")
+        let btn=document.getElementById("btn")
+        let btn1=document.getElementById("btn1")
+
+
+        function playVideo(){
+            if(video.paused){
+                video.play()
+                btn1.innerHTML='<i class="fa fa-play-circle fa-5x"></i>'
+            }
+            else{
+                video.pause()
+                btn1.innerHTML='<i class="fa fa-pause-circle fa-5x"></i>'
+            }
+            
+        }
+        function volumeup(){
+            if(video.volume<1){
+                video.volume+=0.1
+            }
+        }
+        function volumedown(){
+            if (video.volume>0){
+                video.volume-=0.1  
+            }
+        }
+
+            
+        function progressValue() {
+        progressBar.max = video.duration;
+        progressBar.value = video.currentTime;
+
+        currentTime.textContent = formatTime(video.currentTime);
+        durationTime.textContent = formatTime(video.duration);
+        }
+
+        setInterval(progressValue, 500);
+
+        function formatTime(sec) {
+        let minutes = Math.floor(sec / 60);
+        let seconds = Math.floor(sec - minutes * 60);
+        if (seconds < 10) {
+            seconds = `0${seconds}`;
+        }
+        return `${minutes}:${seconds}`;
+        }
+
+        function changeProgressBar() {
+        video.currentTime = progressBar.value;
+        }
+
+        progressBar.addEventListener("click", changeProgressBar);
+
+        document.addEventListener('keyup', (event) => {
+        var name = event.key;
+        var code = event.code;
+        // Alert the key name and key code on keydown
+        alert(`Key pressed ${name} \r\n Key code value: ${code}`);
+        }, false);
+
+
+        var video2=document.querySelector("video");
+        video2.volume=1;
+        </script>
+    </body>
+</html>
